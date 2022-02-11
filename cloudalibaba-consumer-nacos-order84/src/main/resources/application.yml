@@ -1,0 +1,45 @@
+server:
+  port: 84
+
+
+spring:
+  application:
+    name: nacos-order-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 8.210.44.121:8848
+    sentinel:
+      transport:
+        #配置Sentinel dashboard地址
+        dashboard: 8.210.44.121:8080
+        #默认8719端口，假如被占用会自动从8719开始依次+1扫描,直至找到未被占用的端口
+        port: 8719
+
+#消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)
+service-url:
+  nacos-user-service: http://nacos-payment-provider
+
+# 激活Sentinel对Feign的支持
+feign:
+  sentinel:
+    enabled: true
+
+nacos-payment-provider: # eureka-client 表示作用到哪个微服务
+      ribbon:
+        # NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #配置规则 随机
+#         NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule #配置规则 轮询
+        # NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RetryRule #配置规则 重试
+        # NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule #配置规则 响应时间权重
+        # 我们也可以指定为其他策略，包括我们自己定义的，只要把相应的包路径写到这即可。
+          NFLoadBalancerRuleClassName: com.matthew.practice.lb.CustomerBalancerRule
+        #设置feign客户端超时时间(OpenFeign默认支持ribbon)
+          #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+          ReadTimeout: 5000
+          #指的是建立连接后从服务器读取到可用资源所用的时间
+          ConnectTimeout: 5000
+
+logging:
+  level:
+    # feign日志以什么级别监控哪个接口
+    com.matthew.practice.service.PaymentService: debug
