@@ -28,4 +28,9 @@ spring:
             #- After=2020-02-21T15:51:37.485+08:00[Asia/Shanghai]
             #- Cookie=username,zzyy
             #- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式
-
+  redis:
+    host: 43.154.70.143 # Redis服务器地址
+    database: 0
+    port: 6379
+    password: .Password
+    timeout: 1000ms
