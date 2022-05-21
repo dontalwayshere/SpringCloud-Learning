@@ -9,7 +9,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 8.210.44.121:8848 #配置Nacos地址
+        server-addr: 43.154.70.143:8848 #配置Nacos地址
     stream:
       binders: # 在此处配置要绑定的rabbitmq的服务信息；
         defaultRabbit: # 表示定义的名称，用于于binding整合
@@ -17,7 +17,7 @@ spring:
           environment: # 设置rabbitmq的相关的环境配置
             spring:
               rabbitmq:
-                host: 8.210.44.121
+                host: 43.154.70.143
                 port: 5672
                 username: root
                 password: root
